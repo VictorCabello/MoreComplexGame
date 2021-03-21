@@ -1,0 +1,14 @@
+{
+  "name": "MoreComplexGame",
+  "version": "1.0.0",
+  "main": "index.html",
+  "author": "Victor Cabello",
+  "license": "MIT",
+  "devDependencies": {
+    "parcel": "^2.0.0-beta.2"
+  },
+  "scripts": {
+    "build": "parcel build index.html",
+    "start": "parcel serve index.html"
+  }
+}
