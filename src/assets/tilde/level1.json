@@ -71,8 +71,17 @@
  "tileheight":32,
  "tilesets":[
         {
+         "columns":32,
          "firstgid":1,
-         "source":"generic_platformer_tiles.tsx"
+         "image":"..\/img\/generic_platformer_tiles.png",
+         "imageheight":768,
+         "imagewidth":1024,
+         "margin":0,
+         "name":"generic",
+         "spacing":0,
+         "tilecount":768,
+         "tileheight":32,
+         "tilewidth":32
         }],
  "tilewidth":32,
  "type":"map",
