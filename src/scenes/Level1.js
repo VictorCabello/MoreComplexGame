@@ -64,7 +64,7 @@ export default class Level1 extends Phaser.Scene {
     create () {
 
         const platforms = this.map.create();
-        const player = this.player.create(50, 300);
+        const player = this.player.create(10, 300);
 
         this.physics.add.collider(player, platforms);
     }
