@@ -10,6 +10,8 @@ Here I have some resources that is interesting to start having an idea of what b
 * https://www.youtube.com/watch?v=ZwaomOYGuYo&list=PLu4oc9P-ABcOXNOyoAvnMyUwn_kkiVA5B
 * https://www.youtube.com/watch?v=8YUXg3nKSN4 
 * https://stackabuse.com/phaser-3-and-tiled-building-a-platformer/
+* https://gamedevacademy.org/how-to-use-state-machines-to-control-behavior-and-animations-in-phaser/
+* https://www.mkelly.me/blog/phaser-finite-state-machine/
 
 ## Special Thanks 
 

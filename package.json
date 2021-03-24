@@ -13,6 +13,7 @@
     "start": "parcel serve index.html"
   },
   "dependencies": {
+    "machina": "^4.0.2",
     "phaser": "^3.53.1"
   }
 }

@@ -32,6 +32,8 @@ export default class Level1 extends Phaser.Scene {
      */
     map;
 
+    actions = {};
+
     /**
      * This function load the main plugins for the scene, which include
      * the following:
@@ -67,5 +69,14 @@ export default class Level1 extends Phaser.Scene {
         const player = this.player.create(10, 300);
 
         this.physics.add.collider(player, platforms);
+        this.keys = this.input.keyboard.createCursorKeys();
+    }
+
+    update () {
+        Object.keys(this.keys).forEach(k => {
+            this.actions[k] = this.keys[k].isDown;
+        });
+
+        this.player.step(this.actions)
     }
 }
