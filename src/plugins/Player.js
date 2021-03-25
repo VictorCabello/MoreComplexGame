@@ -65,19 +65,19 @@ export default class PlayerPlugin extends Phaser.Plugins.ScenePlugin {
      */
     createSprite(x, y) {
         this.sprite = this.scene.physics.add.sprite(x, y, 'player');
+        this.sprite.scale = 2;
         this.sprite.setBounce(0.1);
         this.sprite.setCollideWorldBounds(true);
         this.createAnims('idle', 0, 0);
-        this.createAnims('walk', 0, 4, {repeat: -1});
-        this.createAnims('jump', 8, 17);
+        this.createAnims('walk', 15, 17, {repeat: -1});
+        this.createAnims('jump', 8, 10);
         this.createAnims('clim', 18, 22, {repeat: -1});
-
-        this.clim();
     }
 
     /**
      * Helper to generate animations based on the png image.
      *
+     * @private
      * @param {string} key - name of the animation should be unique.
      * @param {number} start - first frame of the animation.
      * @param {number} end - last frame of the animation.
@@ -94,7 +94,7 @@ export default class PlayerPlugin extends Phaser.Plugins.ScenePlugin {
                     end: end
                 }
             ),
-            frameRate: 8,
+            frameRate: 4,
             repeat:0
         };
         const finalConfig ={
@@ -103,7 +103,6 @@ export default class PlayerPlugin extends Phaser.Plugins.ScenePlugin {
         }
         scene.anims.create(finalConfig);
         this[key] = function() {
-            console.log(key);
             this.sprite.anims.play(key);
         }
     }

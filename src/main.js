@@ -5,11 +5,14 @@ var config = {
     type: Phaser.AUTO,
     width: 800,
     height: 640,
-    debug: true,
     physics: {
         default: 'arcade',
         arcade: {
-            gravity: { y: 200 }
+            gravity: { y: 200 },
+            debug: true,
+            debugShowBody: true,
+            debugShowStaticBody: true,
+            debugShowVelocity: true,
         }
     },
     scene: [
