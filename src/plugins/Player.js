@@ -5,7 +5,6 @@
  */
 import Phaser from 'phaser';
 import playerPNG from 'url:../assets/img/king.png';
-import machina from 'machina';
 /**
  * Plugin to control the player animations.
  *
@@ -52,9 +51,6 @@ export default class PlayerPlugin extends Phaser.Plugins.ScenePlugin {
     create(x, y) {
         if(this.sprite === null){
             this.createSprite(x, y);
-            FSM_CONFIG['player'] = this;
-            FSM_CONFIG['scene'] = this.scene;
-            this.FSM = new machina.Fsm(FSM_CONFIG);
         }
         return this.sprite;
     }
@@ -69,18 +65,13 @@ export default class PlayerPlugin extends Phaser.Plugins.ScenePlugin {
      */
     createSprite(x, y) {
         this.sprite = this.scene.physics.add.sprite(x, y, 'player');
+        this.sprite.scale = 2;
         this.sprite.setBounce(0.1);
         this.sprite.setCollideWorldBounds(true);
         this.createAnims('idle', 0, 0);
-        this.createAnims('walk', 1, 4, {repeat: -1});
-        this.createAnims('jump', 8, 17);
+        this.createAnims('walk', 15, 17, {repeat: -1});
+        this.createAnims('jump', 8, 10);
         this.createAnims('clim', 18, 22, {repeat: -1});
-
-        this.walk();
-    }
-
-    step(keys){
-        this.FSM.step(keys);
     }
 
     /**
@@ -113,84 +104,6 @@ export default class PlayerPlugin extends Phaser.Plugins.ScenePlugin {
         scene.anims.create(finalConfig);
         this[key] = function() {
             this.sprite.anims.play(key);
-        }
-    }
-}
-
-const FSM_CONFIG = {
-    initialState: 'idle',
-    step: function(keys){
-        this.keys = keys;
-        const {left, right} = this.keys;
-        if(left) {this.player.sprite.setFlipX(true);}
-        if(right) {this.player.sprite.setFlipX(false);}
-        this.handle('step');
-    },
-    states: {
-        "idle": {
-            step: function(){
-                const {left, right, up} = this.keys;
-                if(left || right){
-                    this.transition('move');
-                }
-                else if(up && this.player.sprite.body.blocked.down){
-                    this.transition('jump');
-                }
-            },
-            _onEnter: function(){
-                this.player.idle();
-                this.player.sprite.setVelocityX(0);
-            }
-        },
-        "move":{
-            step: function(){
-                const {left, right} = this.keys;
-                if(this.player.sprite.body.blocked.down &&
-                    (left || right)){
-                    this.transition('walk');
-                }
-                else if(this.player.sprite.body.blocked.down &&
-                        !(left || right)){
-                    this.transition('idle');
-                }
-
-            },
-            _onEnter: function(){
-                velocity = this.player.sprite.flipX ? -100: 100;
-                this.player.sprite.setVelocityX(velocity);
-            }
-        },
-        "walk":{
-            step: function(){
-                const {left, right, up, down} = this.keys;
-                if(!(left || right || up || down)){
-                    this.transition('idle');
-                }
-                else if(this.player.sprite.body.blocked.down && up){
-                    this.transition('jump');
-                }
-            },
-            _onEnter: function(){
-                this.player.walk();
-                velocity = this.player.sprite.flipX ? -100: 100;
-                this.player.sprite.setVelocityX(velocity);
-            }
-        },
-        "jump":{
-            step: function(){
-                const {left, right, up, down} = this.keys;
-                if(this.player.sprite.body.blocked.down &&
-                   !(left || right || up || down)){
-                    this.transition('idle');
-                }
-                else if(left || right){
-                    this.transition('move');
-                }
-            },
-            _onEnter: function(){
-                this.player.sprite.setVelocityY(-150);
-                this.player.jump();
-            }
         }
     }
 }

@@ -5,6 +5,7 @@
  */
 import Phaser from 'phaser';
 import PlayerPlugin from '../plugins/Player.js'
+import PlayerControllerPlugin from '../plugins/PlayerController.js'
 import MapLevel01Plugin from '../plugins/Level1.js'
 
 /**
@@ -32,7 +33,7 @@ export default class Level1 extends Phaser.Scene {
      */
     map;
 
-    actions = {};
+    keys = {};
 
     /**
      * This function load the main plugins for the scene, which include
@@ -56,6 +57,11 @@ export default class Level1 extends Phaser.Scene {
             url: PlayerPlugin,
             sceneKey: 'player'
         });
+        this.load.scenePlugin({
+            key: 'PlayerControllerPlugin',
+            url: PlayerControllerPlugin,
+            sceneKey: 'playerController'
+        });
     }
 
     /**
@@ -73,10 +79,11 @@ export default class Level1 extends Phaser.Scene {
     }
 
     update () {
+        let inputs = {};
         Object.keys(this.keys).forEach(k => {
-            this.actions[k] = this.keys[k].isDown;
+            inputs[k] = this.keys[k].isDown;
         });
 
-        this.player.step(this.actions)
+        this.playerController.send(inputs, this.player)
     }
 }
