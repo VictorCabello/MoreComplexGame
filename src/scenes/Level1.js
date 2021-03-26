@@ -4,48 +4,11 @@
  * @license   {@link https://opensource.org/licenses/MIT|MIT License}
  */
 import Phaser from 'phaser';
-import PlayerPlugin from '../plugins/Player.js'
-import PlayerControllerPlugin from '../plugins/PlayerController.js'
-import MapLevel01Plugin from '../plugins/Level1.js'
+import PlayerPlugin from '../plugins/player/main.js';
+import MapLevel01Plugin from '../plugins/Level1.js';
 
-/**
- * Class that represent the first level of the game.
- *
- * @class
- * @name MoreComplexGame.Level1
- * @since 1.0.0
- */
 export default class Level1 extends Phaser.Scene {
 
-    /**
-     * Plugin that handles all the player animations
-     *
-     * @name player
-     * @type {MoreComplexGame.PlayerPlugin}
-     */
-    player;
-
-    /**
-     * Plugin that handles all the player animations
-     *
-     * @name map
-     * @type {MoreComplexGame.MapLevel01Plugin}
-     */
-    map;
-
-    keys = {};
-
-    /**
-     * This function load the main plugins for the scene, which include
-     * the following:
-     *
-     * 1) {@link player}
-     * 2) {@link map}
-     *
-     * @see Phaser.Types.Scenes.ScenePreloadCallback preload()
-     * @see MoreComplexGame.MapLevel01Plugin
-     * @see MoreComplexGame.PlayerPlugin
-     */
     preload () {
         this.load.scenePlugin({
             key: 'MapLevel01Plugin',
@@ -57,33 +20,39 @@ export default class Level1 extends Phaser.Scene {
             url: PlayerPlugin,
             sceneKey: 'player'
         });
-        this.load.scenePlugin({
-            key: 'PlayerControllerPlugin',
-            url: PlayerControllerPlugin,
-            sceneKey: 'playerController'
-        });
     }
 
-    /**
-     * Crete all the componts for the map, player and the collisions between them.
-     *
-     * @see Phaser.Types.Scenes.ScenePreloadCallback create()
-     */
     create () {
 
         const platforms = this.map.create();
-        const player = this.player.create(10, 300);
+        const playerStart = this.map.getGameObject('playerStart');
+        const player = this.player.create(
+            playerStart.x,
+            playerStart.y
+        );
 
         this.physics.add.collider(player, platforms);
         this.keys = this.input.keyboard.createCursorKeys();
     }
 
     update () {
+        const events = this.getEvents();
+        this.player.send(events);
+    }
+
+    getEvents() {
         let inputs = {};
         Object.keys(this.keys).forEach(k => {
             inputs[k] = this.keys[k].isDown;
         });
+        const events = [];
+        const {left, right, up} = inputs;
+        if(left){events.push('LEFT');}
+        if(right){events.push('RIGHT');}
+        if(up){events.push('UP');}
+        if(!(left || right|| up)) {events.push('STOP');}
 
-        this.playerController.send(inputs, this.player)
+
+        return events;
     }
 }
