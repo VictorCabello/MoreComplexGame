@@ -13,6 +13,7 @@ Here I have some resources that is interesting to start having an idea of what b
 * https://gamedevacademy.org/how-to-use-state-machines-to-control-behavior-and-animations-in-phaser/
 * https://www.mkelly.me/blog/phaser-finite-state-machine/
 * https://egghead.io/lessons/xstate-course-intro-and-overview
+* https://tnodes.medium.com/integrating-react-and-phaser-3-tutorial-eb96717d4a9d
 
 ## Special Thanks 
 

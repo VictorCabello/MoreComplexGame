@@ -4,9 +4,8 @@
  * @license   {@link https://opensource.org/licenses/MIT|MIT License}
  */
 import Phaser from 'phaser';
-import PlayerPlugin from '../plugins/Player.js'
-import PlayerControllerPlugin from '../plugins/PlayerController.js'
-import MapLevel01Plugin from '../plugins/Level1.js'
+import PlayerPlugin from '../plugins/player/main.js';
+import MapLevel01Plugin from '../plugins/Level1.js';
 
 /**
  * Class that represent the first level of the game.
@@ -57,11 +56,6 @@ export default class Level1 extends Phaser.Scene {
             url: PlayerPlugin,
             sceneKey: 'player'
         });
-        this.load.scenePlugin({
-            key: 'PlayerControllerPlugin',
-            url: PlayerControllerPlugin,
-            sceneKey: 'playerController'
-        });
     }
 
     /**
@@ -84,6 +78,6 @@ export default class Level1 extends Phaser.Scene {
             inputs[k] = this.keys[k].isDown;
         });
 
-        this.playerController.send(inputs, this.player)
+        this.player.send(inputs);
     }
 }

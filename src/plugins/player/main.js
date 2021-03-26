@@ -4,7 +4,10 @@
  * @license   {@link https://opensource.org/licenses/MIT|MIT License}
  */
 import Phaser from 'phaser';
-import playerPNG from 'url:../assets/img/king.png';
+import {Machine, interpret} from 'xstate';
+import {FSM_XSTATE, FSM_OPTIONS} from './state_configuration.js';
+// Assets
+import playerPNG from 'url:./assets/king.png';
 /**
  * Plugin to control the player animations.
  *
@@ -12,7 +15,10 @@ import playerPNG from 'url:../assets/img/king.png';
  * @name MoreComplexGame.PlayerPlugin
  */
 export default class PlayerPlugin extends Phaser.Plugins.ScenePlugin {
-
+    /**
+     * State machine to handle of the player behavior.
+     */
+    machine = null;
     /**
      * Sprite that is a graphic representation of the player but it is affected
      * by the physics.
@@ -38,6 +44,7 @@ export default class PlayerPlugin extends Phaser.Plugins.ScenePlugin {
                 endFrame: 23
             }
         });
+
     }
 
     /**
@@ -51,7 +58,12 @@ export default class PlayerPlugin extends Phaser.Plugins.ScenePlugin {
     create(x, y) {
         if(this.sprite === null){
             this.createSprite(x, y);
+            FSM_XSTATE['context']['player'] = this.sprite;
+            this.machine = new Machine(FSM_XSTATE, FSM_OPTIONS);
+            this.interpret = interpret(this.machine);
+            this.interpret.start();
         }
+
         return this.sprite;
     }
 
@@ -100,10 +112,36 @@ export default class PlayerPlugin extends Phaser.Plugins.ScenePlugin {
         const finalConfig ={
             ...config,
             ...addtionalProperty
-        }
+        };
         scene.anims.create(finalConfig);
         this[key] = function() {
             this.sprite.anims.play(key);
-        }
+        };
+    }
+    /**
+     * Send events to the state machine based on the inputs.
+     *
+     * @param inputs {Object} all the inputs that on the control
+    * @param input {Object} the player plugin that handle all the graphics.
+     */
+    send(inputs) {
+        this.handleDirection(inputs);
+
+        const event = this.createEvent(inputs);
+        this.interpret.send(event);
+    }
+
+    handleDirection(inputs){
+        const {left, right} = inputs;
+        if(left) {this.sprite.setFlipX(true);}
+        if(right){this.sprite.setFlipX(false);}
+    }
+
+    createEvent(inputs){
+        const {left, right, up} = inputs;
+        let event = (left || right)? 'MOVE':'STOP';
+        event = (up)? 'JUMP': event;
+        event = (up) && (left || right)? 'JUMP_MOVE': event;
+        return event;
     }
 }
