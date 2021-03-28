@@ -25,8 +25,9 @@ export default class PlayerPlugin extends Phaser.Plugins.ScenePlugin {
 
     }
 
-    create(x, y) {
+    create(config) {
         if(this.sprite === null){
+            const {x, y} = config;
             this.sprite = new PlayerSprite(this.scene, x, y);
             FSM_XSTATE['context']['player'] = this.sprite;
             this.machine = new Machine(FSM_XSTATE, FSM_OPTIONS);

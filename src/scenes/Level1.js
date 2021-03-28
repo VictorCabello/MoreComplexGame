@@ -6,6 +6,8 @@
 import Phaser from 'phaser';
 import PlayerPlugin from '../plugins/player/main.js';
 import MapLevel01Plugin from '../plugins/Level1.js';
+import WinPlugin from '../plugins/win.js';
+import ControlPlugin from '../plugins/control.js';
 
 export default class Level1 extends Phaser.Scene {
 
@@ -20,39 +22,32 @@ export default class Level1 extends Phaser.Scene {
             url: PlayerPlugin,
             sceneKey: 'player'
         });
+        this.load.scenePlugin({
+            key: 'WinPlugin',
+            url: WinPlugin,
+            sceneKey: 'win'
+        });
+        this.load.scenePlugin({
+            key: 'ControlPlugin',
+            url: ControlPlugin,
+            sceneKey: 'control'
+        });
     }
 
     create () {
-
         const platforms = this.map.create();
-        const playerStart = this.map.getGameObject('playerStart');
-        const player = this.player.create(
-            playerStart.x,
-            playerStart.y
-        );
+        const player =
+              this.player.create(this.map.getGameObject('playerStart'));
+
+        this.win.create(this.map.getGameObject('win'));
 
         this.physics.add.collider(player, platforms);
-        this.keys = this.input.keyboard.createCursorKeys();
     }
 
     update () {
-        const events = this.getEvents();
-        this.player.send(events);
-    }
+        const sprite = this.player.sprite;
 
-    getEvents() {
-        let inputs = {};
-        Object.keys(this.keys).forEach(k => {
-            inputs[k] = this.keys[k].isDown;
-        });
-        const events = [];
-        const {left, right, up} = inputs;
-        if(left){events.push('LEFT');}
-        if(right){events.push('RIGHT');}
-        if(up){events.push('UP');}
-        if(!(left || right|| up)) {events.push('STOP');}
-
-
-        return events;
+        this.control.update(this.player);
+        this.win.update(sprite);
     }
 }

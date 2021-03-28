@@ -5,6 +5,7 @@
  */
 import Phaser from 'phaser';
 import Level1 from './scenes/Level1';
+import Win from './scenes/win';
 
 /**
  * @constant
@@ -25,7 +26,8 @@ const config = {
         }
     },
     scene: [
-        Level1
+        Level1,
+        Win
     ]
 };
 

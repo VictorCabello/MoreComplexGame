@@ -9,15 +9,13 @@ import tiles from 'url:../assets/img/generic_platformer_tiles.png';
 
 export default class MapLevel01Plugin extends Phaser.Plugins.ScenePlugin {
 
-    platforms = null;
-
     boot() {
         this.scene.load.image('tiles', tiles);
         this.scene.load.tilemapTiledJSON('map', map);
     }
 
     create() {
-        if(this.platforms === null){
+        if(! this.platforms){
             this.map = this.scene.make.tilemap({ key: 'map' });
             const tileset = this.map.addTilesetImage('generic', 'tiles');
 
@@ -42,6 +40,6 @@ export default class MapLevel01Plugin extends Phaser.Plugins.ScenePlugin {
         const layer = this.map.getObjectLayer('GameObjects');
         const wanted = layer.objects.find((element) => element.name === name);
         if(wanted) { return wanted; }
-        else {throw  name + ' not found in GameObjects'}
+        else { throw  name + ' not found in GameObjects'; }
     }
 }
