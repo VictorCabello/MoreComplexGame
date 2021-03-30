@@ -6,6 +6,7 @@
 import Phaser from 'phaser';
 import Level1 from './scenes/Level1';
 import Win from './scenes/win';
+import GameOverScene from './scenes/game_over';
 
 /**
  * @constant
@@ -25,9 +26,14 @@ const config = {
             debugShowVelocity: true,
         }
     },
+    render: {
+        pixelArt: true,
+        antialiasGL: false,
+    },
     scene: [
         Level1,
-        Win
+        Win,
+        GameOverScene
     ]
 };
 

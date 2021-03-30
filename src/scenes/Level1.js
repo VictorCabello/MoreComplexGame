@@ -6,7 +6,6 @@
 import Phaser from 'phaser';
 import PlayerPlugin from '../plugins/player/main.js';
 import MapLevel01Plugin from '../plugins/Level1.js';
-import WinPlugin from '../plugins/win.js';
 import ControlPlugin from '../plugins/control.js';
 
 export default class Level1 extends Phaser.Scene {
@@ -23,11 +22,6 @@ export default class Level1 extends Phaser.Scene {
             sceneKey: 'player'
         });
         this.load.scenePlugin({
-            key: 'WinPlugin',
-            url: WinPlugin,
-            sceneKey: 'win'
-        });
-        this.load.scenePlugin({
             key: 'ControlPlugin',
             url: ControlPlugin,
             sceneKey: 'control'
@@ -39,8 +33,6 @@ export default class Level1 extends Phaser.Scene {
         const player =
               this.player.create(this.map.getGameObject('playerStart'));
 
-        this.win.create(this.map.getGameObject('win'));
-
         this.physics.add.collider(player, platforms);
     }
 
@@ -48,6 +40,6 @@ export default class Level1 extends Phaser.Scene {
         const sprite = this.player.sprite;
 
         this.control.update(this.player);
-        this.win.update(sprite);
+        this.map.update(sprite);
     }
 }
