@@ -118,6 +118,26 @@
       "name": "king9.png",
       "path": "//wsl/Ubuntu/home/gungir87/Documents/MoreComplexGame/src/assets/img/img/king9.png",
       "folder": ""
+    },
+    {
+      "name": "snake1.png",
+      "path": "//wsl/Ubuntu/home/gungir87/Documents/MoreComplexGame/src/assets/img/img/snake1.png",
+      "folder": ""
+    },
+    {
+      "name": "snake2.png",
+      "path": "//wsl/Ubuntu/home/gungir87/Documents/MoreComplexGame/src/assets/img/img/snake2.png",
+      "folder": ""
+    },
+    {
+      "name": "snake3.png",
+      "path": "//wsl/Ubuntu/home/gungir87/Documents/MoreComplexGame/src/assets/img/img/snake3.png",
+      "folder": ""
+    },
+    {
+      "name": "snake4.png",
+      "path": "//wsl/Ubuntu/home/gungir87/Documents/MoreComplexGame/src/assets/img/img/snake4.png",
+      "folder": ""
     }
   ],
   "folders": [],
@@ -147,6 +167,6 @@
     "alphaThreshold": "0",
     "detectIdentical": true,
     "packer": "MaxRectsBin",
-    "packerMethod": "BestShortSideFit"
+    "packerMethod": "BestAreaFit"
   }
 }

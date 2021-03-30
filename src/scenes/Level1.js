@@ -7,6 +7,7 @@ import Phaser from 'phaser';
 import PlayerPlugin from '../plugins/player/main.js';
 import MapLevel01Plugin from '../plugins/Level1.js';
 import ControlPlugin from '../plugins/control.js';
+import { SnakeSprite } from '../plugins/mobs/sprites/snake.js';
 
 import atlasPNG from 'url:../assets/img/texture.png';
 import atlasJSON from 'url:../assets/img/texture.json';
@@ -42,6 +43,13 @@ export default class Level1 extends Phaser.Scene {
               this.player.create(this.map.getGameObject('playerStart'));
 
         this.physics.add.collider(player, platforms);
+
+        const snakes = this.physics.add.group({
+            classType: SnakeSprite
+        });
+        snakes.get(500, 450, 'snake');
+
+        this.physics.add.collider(snakes, platforms);
     }
 
     update () {
