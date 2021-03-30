@@ -21,9 +21,22 @@ export default class MapLevel01Plugin extends Phaser.Plugins.ScenePlugin {
 
             this.createBackground(tileset);
             this.platforms = this.createPlaforms(tileset);
+
+            this.initWin(this.getGameObject('win'));
+            this.initDieAreas(this.getObjectByType('die'));
         }
 
         return this.platforms;
+    }
+
+    update ( sprite ) {
+        if( this.checkContains(this.win, sprite) ) {
+            this.scene.scene.run('you-win');
+        }
+        else if (
+            this.dieAreas.some((area) => this.checkContains(area, sprite)) ){
+            this.scene.scene.run('you-lose');
+        }
     }
 
     createBackground(tileset) {
@@ -41,5 +54,34 @@ export default class MapLevel01Plugin extends Phaser.Plugins.ScenePlugin {
         const wanted = layer.objects.find((element) => element.name === name);
         if(wanted) { return wanted; }
         else { throw  name + ' not found in GameObjects'; }
+    }
+
+    getObjectByType ( type ) {
+        const layer = this.map.getObjectLayer('GameObjects');
+        return layer.objects.filter((element) => element.type === type);
+    }
+
+    initWin ( winArea ){
+        this.win = this.initFrame(winArea);
+    }
+
+    initDieAreas ( dieAreas ){
+        this.dieAreas = [];
+        for (var i = 0; i < dieAreas.length; ++i) {
+            this.dieAreas.push(this.initFrame(dieAreas[i]));
+            
+        }
+    }
+
+    initFrame ( frame ) {
+        let { x, y, width, height} = frame;
+        //const myReturn = this.scene.add.rectangle(x, y, width, height,0xff6692);
+        return new Phaser.Geom.Rectangle(x, y, width, height);
+    }
+
+    checkContains ( frame, sprite ) {
+        return frame.contains(
+            sprite.x + (sprite.width / 2),
+            sprite.y + (sprite.height / 2));
     }
 }
