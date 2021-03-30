@@ -1,0 +1,152 @@
+{
+  "meta": {
+    "version": "0.6.6"
+  },
+  "savePath": "C:\\Users\\VictorCabello\\Desktop",
+  "images": [
+    {
+      "name": "king0.png",
+      "path": "//wsl/Ubuntu/home/gungir87/Documents/MoreComplexGame/src/assets/img/img/king0.png",
+      "folder": ""
+    },
+    {
+      "name": "king1.png",
+      "path": "//wsl/Ubuntu/home/gungir87/Documents/MoreComplexGame/src/assets/img/img/king1.png",
+      "folder": ""
+    },
+    {
+      "name": "king10.png",
+      "path": "//wsl/Ubuntu/home/gungir87/Documents/MoreComplexGame/src/assets/img/img/king10.png",
+      "folder": ""
+    },
+    {
+      "name": "king11.png",
+      "path": "//wsl/Ubuntu/home/gungir87/Documents/MoreComplexGame/src/assets/img/img/king11.png",
+      "folder": ""
+    },
+    {
+      "name": "king12.png",
+      "path": "//wsl/Ubuntu/home/gungir87/Documents/MoreComplexGame/src/assets/img/img/king12.png",
+      "folder": ""
+    },
+    {
+      "name": "king13.png",
+      "path": "//wsl/Ubuntu/home/gungir87/Documents/MoreComplexGame/src/assets/img/img/king13.png",
+      "folder": ""
+    },
+    {
+      "name": "king14.png",
+      "path": "//wsl/Ubuntu/home/gungir87/Documents/MoreComplexGame/src/assets/img/img/king14.png",
+      "folder": ""
+    },
+    {
+      "name": "king15.png",
+      "path": "//wsl/Ubuntu/home/gungir87/Documents/MoreComplexGame/src/assets/img/img/king15.png",
+      "folder": ""
+    },
+    {
+      "name": "king16.png",
+      "path": "//wsl/Ubuntu/home/gungir87/Documents/MoreComplexGame/src/assets/img/img/king16.png",
+      "folder": ""
+    },
+    {
+      "name": "king17.png",
+      "path": "//wsl/Ubuntu/home/gungir87/Documents/MoreComplexGame/src/assets/img/img/king17.png",
+      "folder": ""
+    },
+    {
+      "name": "king18.png",
+      "path": "//wsl/Ubuntu/home/gungir87/Documents/MoreComplexGame/src/assets/img/img/king18.png",
+      "folder": ""
+    },
+    {
+      "name": "king19.png",
+      "path": "//wsl/Ubuntu/home/gungir87/Documents/MoreComplexGame/src/assets/img/img/king19.png",
+      "folder": ""
+    },
+    {
+      "name": "king2.png",
+      "path": "//wsl/Ubuntu/home/gungir87/Documents/MoreComplexGame/src/assets/img/img/king2.png",
+      "folder": ""
+    },
+    {
+      "name": "king20.png",
+      "path": "//wsl/Ubuntu/home/gungir87/Documents/MoreComplexGame/src/assets/img/img/king20.png",
+      "folder": ""
+    },
+    {
+      "name": "king21.png",
+      "path": "//wsl/Ubuntu/home/gungir87/Documents/MoreComplexGame/src/assets/img/img/king21.png",
+      "folder": ""
+    },
+    {
+      "name": "king22.png",
+      "path": "//wsl/Ubuntu/home/gungir87/Documents/MoreComplexGame/src/assets/img/img/king22.png",
+      "folder": ""
+    },
+    {
+      "name": "king3.png",
+      "path": "//wsl/Ubuntu/home/gungir87/Documents/MoreComplexGame/src/assets/img/img/king3.png",
+      "folder": ""
+    },
+    {
+      "name": "king4.png",
+      "path": "//wsl/Ubuntu/home/gungir87/Documents/MoreComplexGame/src/assets/img/img/king4.png",
+      "folder": ""
+    },
+    {
+      "name": "king5.png",
+      "path": "//wsl/Ubuntu/home/gungir87/Documents/MoreComplexGame/src/assets/img/img/king5.png",
+      "folder": ""
+    },
+    {
+      "name": "king6.png",
+      "path": "//wsl/Ubuntu/home/gungir87/Documents/MoreComplexGame/src/assets/img/img/king6.png",
+      "folder": ""
+    },
+    {
+      "name": "king7.png",
+      "path": "//wsl/Ubuntu/home/gungir87/Documents/MoreComplexGame/src/assets/img/img/king7.png",
+      "folder": ""
+    },
+    {
+      "name": "king8.png",
+      "path": "//wsl/Ubuntu/home/gungir87/Documents/MoreComplexGame/src/assets/img/img/king8.png",
+      "folder": ""
+    },
+    {
+      "name": "king9.png",
+      "path": "//wsl/Ubuntu/home/gungir87/Documents/MoreComplexGame/src/assets/img/img/king9.png",
+      "folder": ""
+    }
+  ],
+  "folders": [],
+  "packOptions": {
+    "textureName": "texture",
+    "textureFormat": "png",
+    "removeFileExtension": true,
+    "prependFolderName": true,
+    "base64Export": false,
+    "tinify": false,
+    "tinifyKey": "",
+    "scale": 1,
+    "disableSmoothing": false,
+    "filter": "none",
+    "exporter": "JSON (hash)",
+    "fileName": "pack-result",
+    "savePath": "C:\\Users\\VictorCabello\\Desktop",
+    "width": 2048,
+    "height": 2048,
+    "fixedSize": false,
+    "powerOfTwo": false,
+    "padding": 0,
+    "extrude": 0,
+    "allowRotation": true,
+    "allowTrim": true,
+    "trimMode": "trim",
+    "alphaThreshold": "0",
+    "detectIdentical": true,
+    "packer": "MaxRectsBin",
+    "packerMethod": "BestShortSideFit"
+  }
+}

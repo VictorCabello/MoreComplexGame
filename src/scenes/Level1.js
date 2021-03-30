@@ -8,9 +8,17 @@ import PlayerPlugin from '../plugins/player/main.js';
 import MapLevel01Plugin from '../plugins/Level1.js';
 import ControlPlugin from '../plugins/control.js';
 
+import atlasPNG from 'url:../assets/img/texture.png';
+import atlasJSON from 'url:../assets/img/texture.json';
+
 export default class Level1 extends Phaser.Scene {
 
     preload () {
+        this.load.atlas(
+            'atlas',
+            atlasPNG,
+            atlasJSON
+        );
         this.load.scenePlugin({
             key: 'MapLevel01Plugin',
             url: MapLevel01Plugin,
