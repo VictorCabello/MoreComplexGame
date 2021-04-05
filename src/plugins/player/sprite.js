@@ -16,8 +16,7 @@ export class PlayerSprite extends Phaser.Physics.Arcade.Sprite {
         this.setSize(this.width -20 , this.height -10).setOffset(10, 10);
 
         this.scale = 2;
-        this.setBounce(0.1);
-        this.setCollideWorldBounds(true);
+        this.setCollideWorldBounds(false);
 
         this.createAnims('idle', 0, 0);
         this.createAnims('walk', 15, 17, {repeat: -1});

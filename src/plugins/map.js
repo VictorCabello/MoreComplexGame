@@ -6,6 +6,7 @@
 import Phaser from 'phaser';
 import map from '../assets/tilde/level1.json';
 import tiles from 'url:../assets/img/generic_platformer_tiles.png';
+import { SnakeSprite } from '../plugins/mobs/sprites/snake.js';
 
 export default class MapLevel01Plugin extends Phaser.Plugins.ScenePlugin {
 
@@ -24,6 +25,10 @@ export default class MapLevel01Plugin extends Phaser.Plugins.ScenePlugin {
 
             this.initWin(this.getGameObject('win'));
             this.initDieAreas(this.getObjectByType('die'));
+            this.initMobs( 
+                this.getMobByType('snake'),
+                this.getMobByType('mobWall'),
+             );
         }
 
         return this.platforms;
@@ -35,8 +40,22 @@ export default class MapLevel01Plugin extends Phaser.Plugins.ScenePlugin {
         }
         else if (
             this.dieAreas.some((area) => this.checkContains(area, sprite)) ){
-            this.scene.scene.run('you-lose');
+                this.lose();
         }
+    }
+
+    add ( player ) {
+        const scene = this.scene;
+        scene.physics.add.collider(this.snakes,
+                                   player,
+                                   () => true,
+                                   this.lose,
+                                   this);
+        scene.physics.add.collider(player, this.platforms);
+    }
+
+    lose() {
+        this.scene.scene.run('you-lose');
     }
 
     createBackground(tileset) {
@@ -61,6 +80,11 @@ export default class MapLevel01Plugin extends Phaser.Plugins.ScenePlugin {
         return layer.objects.filter((element) => element.type === type);
     }
 
+    getMobByType ( type ) {
+        const layer = this.map.getObjectLayer('mobs');
+        return layer.objects.filter((element) => element.type === type);
+    }
+
     initWin ( winArea ){
         this.win = this.initFrame(winArea);
     }
@@ -77,6 +101,43 @@ export default class MapLevel01Plugin extends Phaser.Plugins.ScenePlugin {
         let { x, y, width, height} = frame;
         //const myReturn = this.scene.add.rectangle(x, y, width, height,0xff6692);
         return new Phaser.Geom.Rectangle(x, y, width, height);
+    }
+
+    initMobs ( mobs, mobWall ) {
+        const scene = this.scene;
+        const snakes = scene.physics.add.group({
+            collideWorldBounds: true,
+            classType: SnakeSprite
+        });
+
+        const wallMobsGroup = scene.physics.add.group({
+            allowGravity: false,
+            immovable: true,
+            visible: false
+
+        });
+
+        mobs.forEach(mob => {
+            snakes.get(mob.x, mob.y - 20);
+        });
+
+        mobWall.forEach(area => {
+            const {x, y, width, height} = area;
+            const rectangle = scene.add.rectangle(x, y, width, height);
+            rectangle.setOrigin(0);
+            wallMobsGroup.add(rectangle);
+        });
+
+        scene.physics.world.on('worldbounds', (body) => {
+            const gameObject = body.gameObject;
+            if( gameObject instanceof SnakeSprite){
+                gameObject.destroy();
+            }
+        });
+
+        scene.physics.add.collider(snakes, this.platforms);
+        scene.physics.add.collider(snakes, wallMobsGroup);
+        this.snakes = snakes;
     }
 
     checkContains ( frame, sprite ) {

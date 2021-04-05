@@ -11,19 +11,6 @@ import playerPNG from 'url:./assets/king.png';
 
 export default class PlayerPlugin extends Phaser.Plugins.ScenePlugin {
     sprite = null;
-    boot() {
-        this.scene.load.spritesheet({
-            key: 'player',
-            url: playerPNG,
-            frameConfig: {
-                frameWidth: 32,
-                frameHeight: 32,
-                startFrame: 0,
-                endFrame: 23
-            }
-        });
-
-    }
 
     create(config) {
         if(this.sprite === null){

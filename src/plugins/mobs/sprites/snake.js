@@ -4,6 +4,9 @@
  * @license   {@link https://opensource.org/licenses/MIT|MIT License}
  */
 import Phaser from 'phaser';
+import {Machine, interpret} from 'xstate';
+
+
 
 export class SnakeSprite extends Phaser.Physics.Arcade.Sprite {
 
@@ -19,27 +22,41 @@ export class SnakeSprite extends Phaser.Physics.Arcade.Sprite {
        this.scale = 2;
        this.setBounce(0.1);
        this.setCollideWorldBounds(true);
+       this.body.onWorldBounds = true;
 
         this.createAnims('idle', 1, 1);
         this.createAnims('walk', 1, 4, {repeat: -1});
         this.createAnims('jump', 1, 3);
-        console.log('entroo.....');
+
+        this.initFSM();
     }
 
-    preUpdate ( time, deltaTime ) {
-        super.preUpdate(time, deltaTime);
-    }
 
-    playIdle() {
+    stop() {
         this.anims.play('snake_idle');
+        this.setVelocityX(0);
     }
 
-    playWalk() {
+    move() {
         this.anims.play('snake_walk');
+        const speed = 100;
+        const velocity = this.flipX ? -1 * speed : speed;
+        this.setVelocityX(velocity);
     }
 
-    playJump() {
+    jump() {
         this.anims.play('snake_jump');
+        this.setVelocityY(-150);
+    }
+
+    turn(){
+        this.setVelocityX(0);
+        this.toggleFlipX();
+    }
+
+    destroy() {
+        this.timer.destroy();
+        super.destroy();
     }
 
     createAnims(key, start, end, additionalAnimsConfig={},
@@ -56,7 +73,7 @@ export class SnakeSprite extends Phaser.Physics.Arcade.Sprite {
                 }
             ),
             frameRate: 4,
-            repeat:0
+            repeat: 0
         };
         const finalConfig ={
             ...config,
@@ -65,4 +82,70 @@ export class SnakeSprite extends Phaser.Physics.Arcade.Sprite {
         scene.anims.create(finalConfig);
     }
 
+    initFSM() {
+        const context = this;
+        const SnakeFSM = {
+            id: 'snakeFSM',
+            initial: 'idle',
+            context: context,
+            states: {
+                idle: {
+                    on: {
+                        DESTROY: { actions: 'destroy' },
+                        TURN: { actions: 'turn' },
+                        MOVE: { target: 'walking' },
+                        JUMP: { target: 'jumping' }
+                    },
+                    onEntry: 'stop'
+                },
+                walking: {
+                    on: {
+                        DESTROY: { actions: 'destroy' },
+                        TURN: { actions: 'turn' },
+                        STOP: { target: 'idle' },
+                        JUMP: { target: 'jumping' }
+                    },
+                    onEntry: 'move'
+                },
+                jumping: {
+                    on: {
+                        DESTROY: { actions: 'destroy' },
+                        TURN: { actions: 'turn' },
+                        STOP: { target: 'idle' },
+                        MOVE: { target: 'walking' }
+                    },
+                    onEntry: 'jump'
+                }
+            }
+        };
+
+        this.machine = new Machine(SnakeFSM,
+            {
+                actions: {
+                    stop: function () { context.stop(); },
+                    move: function () { context.move(); },
+                    turn: function () { context.turn(); },
+                    jump: function () { context.jump(); },
+                    destroy: function () { 
+                        context.timer.destroy();
+                        context.destroy();
+                     }
+                }
+            });
+        this.interpret = interpret(this.machine);
+        this.interpret.start();
+
+        const trigger = this.interpret;
+
+        this.timer = this.scene.time.addEvent({
+            delay: 1000,
+            loop: true,
+
+            callback: function () {
+                const events = ['STOP', 'MOVE', 'TURN', 'JUMP'];
+                const currentIndex = Math.floor(Math.random() * 4);
+                trigger.send(events[currentIndex]);
+            }
+        });
+    }
 }
