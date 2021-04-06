@@ -4,16 +4,50 @@
  * @license   {@link https://opensource.org/licenses/MIT|MIT License}
  */
 import Phaser from 'phaser';
-import PlayerPlugin from '../plugins/player/main.js';
-import MapLevel01Plugin from '../plugins/Level1.js';
+import PlayerPlugin from '../plugins/player';
+import MapPlugin from '../plugins/map.js';
 import ControlPlugin from '../plugins/control.js';
 
+import atlasPNG from 'url:../assets/img/texture.png';
+import atlasJSON from 'url:../assets/img/texture.json';
+import map from '../assets/tilde/level1.json';
+import tiles from 'url:../assets/img/generic_platformer_tiles.png';
+
+import { LEVEL_01_TILEMAP_NAME } from '../constant';
+
+const TILESET_NAME = 'generic';
+const TILESET_SRC = 'tiles';
 export default class Level1 extends Phaser.Scene {
 
-    preload () {
+    preload() {
+        this.loadAssets();
+        this.loadPlugins();
+    }
+
+    create() {
+        const tilesetDic = {}
+        tilesetDic[TILESET_NAME] = TILESET_SRC
+        this.map.create(LEVEL_01_TILEMAP_NAME, tilesetDic);
+    }
+
+    update() {
+        this.control.update(this.player);
+    }
+
+    loadAssets() {
+        this.load.image(TILESET_SRC, tiles);
+        this.load.tilemapTiledJSON(LEVEL_01_TILEMAP_NAME, map);
+        this.load.atlas(
+            'atlas',
+            atlasPNG,
+            atlasJSON
+        );
+    }
+
+    loadPlugins() {
         this.load.scenePlugin({
             key: 'MapLevel01Plugin',
-            url: MapLevel01Plugin,
+            url: MapPlugin,
             sceneKey: 'map'
         });
         this.load.scenePlugin({
@@ -26,20 +60,5 @@ export default class Level1 extends Phaser.Scene {
             url: ControlPlugin,
             sceneKey: 'control'
         });
-    }
-
-    create () {
-        const platforms = this.map.create();
-        const player =
-              this.player.create(this.map.getGameObject('playerStart'));
-
-        this.physics.add.collider(player, platforms);
-    }
-
-    update () {
-        const sprite = this.player.sprite;
-
-        this.control.update(this.player);
-        this.map.update(sprite);
     }
 }

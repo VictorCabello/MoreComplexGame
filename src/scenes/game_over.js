@@ -1,8 +1,8 @@
 import Phaser from 'phaser';
-
+import {SCENE_GAME_OVER} from '../constant';
 export default class GameOverScene extends Phaser.Scene {
     constructor(){
-        super('you-lose');
+        super(SCENE_GAME_OVER);
     }
 
     create(){

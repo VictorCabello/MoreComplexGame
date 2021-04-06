@@ -7,7 +7,7 @@ import Phaser from 'phaser';
 
 export class PlayerSprite extends Phaser.Physics.Arcade.Sprite {
     constructor (scene, x, y) {
-        super(scene, x, y, 'player');
+        super(scene, x, y, 'atlas', 'king0');
 
         scene.add.existing(this);
         scene.physics.add.existing(this);
@@ -16,8 +16,8 @@ export class PlayerSprite extends Phaser.Physics.Arcade.Sprite {
         this.setSize(this.width -20 , this.height -10).setOffset(10, 10);
 
         this.scale = 2;
-        this.setBounce(0.1);
-        this.setCollideWorldBounds(true);
+        this.setCollideWorldBounds(false);
+
         this.createAnims('idle', 0, 0);
         this.createAnims('walk', 15, 17, {repeat: -1});
         this.createAnims('jump', 8, 10);
@@ -36,13 +36,15 @@ export class PlayerSprite extends Phaser.Physics.Arcade.Sprite {
         this.anims.play('jump');
     }
 
-    createAnims(key, start, end, addtionalProperty={}) {
+    createAnims(key, start, end, additionalAnimsConfig={},
+                additionalFrameConfig={}) {
         const scene = this.scene;
         const config = {
             key: key,
-            frames: scene.anims.generateFrameNumbers(
-                'player',
+            frames: scene.anims.generateFrameNames(
+                'atlas',
                 {
+                    prefix: 'king',
                     start: start,
                     end: end
                 }
@@ -52,7 +54,7 @@ export class PlayerSprite extends Phaser.Physics.Arcade.Sprite {
         };
         const finalConfig ={
             ...config,
-            ...addtionalProperty
+            ...additionalAnimsConfig
         };
         scene.anims.create(finalConfig);
     }

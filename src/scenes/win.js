@@ -1,8 +1,9 @@
 import Phaser from 'phaser';
+import { SCENE_WIN } from '../constant';
 
 export default class YouWin extends Phaser.Scene {
     constructor(){
-        super('you-win');
+        super(SCENE_WIN);
     }
 
     create(){
