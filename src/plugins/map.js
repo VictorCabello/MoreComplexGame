@@ -131,6 +131,7 @@ export default class MapPlugin extends Phaser.Plugins.ScenePlugin {
         }
         scene.player.create(this.getGameObject(PLAYER_START_AREA));
         const player = scene.player.sprite;
+        const spells = scene.player.spells;
         scene.physics.add.collider(this.snakes,
             player,
             () => true,
@@ -146,6 +147,14 @@ export default class MapPlugin extends Phaser.Plugins.ScenePlugin {
             player,
             () => true,
             this.win,
+            this);
+        scene.physics.add.overlap(this.snakes,
+            spells,
+            (snake, spell) => spell.visible,
+            (snake, spell) => {
+                spell.send('HIT');
+                snake.destroy();
+            },
             this);
     }
 

@@ -15,8 +15,10 @@ Here I have some resources that is interesting to start having an idea of what b
 * https://egghead.io/lessons/xstate-course-intro-and-overview
 * https://tnodes.medium.com/integrating-react-and-phaser-3-tutorial-eb96717d4a9d
 * https://baraujo.net/integrating-tiled-maps-with-phaser/
+* https://www.brianstorti.com/the-actor-model/
 
 ## Special Thanks 
 
 * "generic-platformer-tiles" by [surt] licensed [CC0 1.0 Universal (CC0 1.0) Public Domain Dedication]: https://opengameart.org/content/generic-platformer-tiles
 * "a-platformer-in-the-forest" by [Buch] licensed [CC0 1.0 Universal (CC0 1.0) Public Domain Dedication]: https://opengameart.org/content/a-platformer-in-the-forest
+* "Fireballs" by [xyezawr] licensed [CC0 1.0 Universal (CC0 1.0) Public Domain Dedication]: https://xyezawr.itch.io/free-pixel-effects-pack-13-fireballs 

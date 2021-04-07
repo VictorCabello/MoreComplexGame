@@ -2,7 +2,7 @@
   "meta": {
     "version": "0.6.6"
   },
-  "savePath": "C:\\Users\\VictorCabello\\Desktop",
+  "savePath": "D:\\projects\\test\\MoreComplexGame\\src\\assets\\img",
   "images": [
     {
       "name": "king0.png",
@@ -140,7 +140,9 @@
       "folder": ""
     }
   ],
-  "folders": [],
+  "folders": [
+    "D:/projects/test/MoreComplexGame/src/assets/img/img/fireball"
+  ],
   "packOptions": {
     "textureName": "texture",
     "textureFormat": "png",
@@ -154,19 +156,19 @@
     "filter": "none",
     "exporter": "JSON (hash)",
     "fileName": "pack-result",
-    "savePath": "C:\\Users\\VictorCabello\\Desktop",
+    "savePath": "D:\\projects\\test\\MoreComplexGame\\src\\assets\\img",
     "width": 2048,
     "height": 2048,
     "fixedSize": false,
     "powerOfTwo": false,
     "padding": 0,
     "extrude": 0,
-    "allowRotation": true,
+    "allowRotation": false,
     "allowTrim": true,
     "trimMode": "trim",
     "alphaThreshold": "0",
     "detectIdentical": true,
-    "packer": "MaxRectsBin",
-    "packerMethod": "BestAreaFit"
+    "packer": "MaxRectsPacker",
+    "packerMethod": "SmartSquare"
   }
 }
