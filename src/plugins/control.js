@@ -21,11 +21,12 @@ export default class ControlPlugin extends Phaser.Plugins.ScenePlugin {
             inputs[k] = this.keys[k].isDown;
         });
         const events = [];
-        const {left, right, up} = inputs;
+        const {left, right, up, space} = inputs;
         if(left){events.push('LEFT');}
         if(right){events.push('RIGHT');}
         if(up){events.push('UP');}
         if(!(left || right|| up)) {events.push('STOP');}
+        if( space ) { events.push('CAST') }
 
 
         return events;
